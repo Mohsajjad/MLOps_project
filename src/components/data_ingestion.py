@@ -1,10 +1,13 @@
 import os
 import sys
-from src.exception import CustomException
-from src.logger import logging
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+
+from src.logger import logging
+from src.exception import CustomException
+from src.components.data_transformation import DataTransformation, DataTransformationConfig
 
 @dataclass
 class DataIngestionConfig: #This class can also be put in another folder named config. Basically configuring the file paths where this has to be stored.
@@ -41,4 +44,7 @@ class DataIngestion:
         
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data, test_data)
